@@ -2,7 +2,10 @@
 
 ### Reference-based Restoration of Digitized Analog Videotapes
 
-This is the **official repository** of the [**paper**]() "*Reference-based Restoration of Digitized Analog Videotapes*".
+[![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2310.14926)
+[![GitHub Stars](https://img.shields.io/github/stars/miccunifi/TAPE?style=social)](https://github.com/miccunifi/TAPE)
+
+This is the **official repository** of the [**paper**](https://arxiv.org/abs/2310.14926) "*Reference-based Restoration of Digitized Analog Videotapes*".
 
 ## Overview
 
@@ -19,7 +22,14 @@ Overview of the proposed approach. *Left* given a video, we identify the cleanes
 ## Citation
 
 ```bibtex
-
+@misc{agnolucci2023referencebased,
+    title={Reference-based Restoration of Digitized Analog Videotapes},
+    author={Lorenzo Agnolucci and Leonardo Galteri and Marco Bertini and Alberto Del Bimbo},
+    year={2023},
+    eprint={2310.14926},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
 ```
 
 ## TO-DO:
