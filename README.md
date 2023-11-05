@@ -5,6 +5,8 @@
 [![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2310.14926)
 [![GitHub Stars](https://img.shields.io/github/stars/miccunifi/TAPE?style=social)](https://github.com/miccunifi/TAPE)
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/reference-based-restoration-of-digitized/analog-video-restoration-on-tape)](https://paperswithcode.com/sota/analog-video-restoration-on-tape?p=reference-based-restoration-of-digitized)
+
 This is the **official repository** of the [**paper**](https://arxiv.org/abs/2310.14926) "*Reference-based Restoration of Digitized Analog Videotapes*".
 
 ## Overview
