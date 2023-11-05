@@ -34,11 +34,16 @@ Overview of the proposed approach. *Left* given a video, we identify the cleanes
 }
 ```
 
+## Dataset
+We release a dataset of videos synthetically degraded with Adobe After Effects to exhibit artifacts resembling those of real-world analog videotapes. The original high-quality videos belong to the Venice scene of the Harmonic dataset. The artifacts taken into account are: 1) tape mistracking; 2) VHS edge waving; 3) chroma loss along the scanlines; 4) tape noise; 5) undersaturation. The dataset comprises a total of 26,392 frames corresponding to 40 clips. The clips are randomly divided into training and test sets with a 75%-25% ratio.
+
+The dataset can be downloaded [here](https://drive.google.com/drive/folders/1NjTiXOSf8_FVofvGFBGFwndomjTsThF-?usp=sharing). We release both the ```mp4``` videos and the [LMDB](https://lmdb.readthedocs.io/en/release/) files associated with each split.
+
 ## TO-DO:
 - [ ] Pre-trained model
 - [ ] Testing code
 - [ ] Training code
-- [ ] Synthetic dataset
+- [x] Synthetic dataset
 
 
 ## Authors
