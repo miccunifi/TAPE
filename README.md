@@ -59,7 +59,7 @@ chmod +x install_requirements.sh
 ## Real-world inference
 To use our method for restoring a real-world video, download the pre-trained model from the 
 [release](https://github.com/miccunifi/TAPE/releases/tag/latest) and place it under
-the ```TAPE/experiments/pretrained_model``` directory. Then, run the following command:
+the ```experiments/pretrained_model``` directory. Then, run the following command:
 
 ```python real_world_inference.py --input-path <path_to_video> --output-path <path_to_output_folder>```
 
