@@ -34,6 +34,54 @@ Overview of the proposed approach. *Left* given a video, we identify the cleanes
 }
 ```
 
+## Installation
+We recommend using the [**Anaconda**](https://www.anaconda.com/) package manager to avoid dependency/reproducibility
+problems.
+For Linux systems, you can find a conda installation
+guide [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html).
+
+1. Clone the repository
+
+```sh
+git clone https://github.com/miccunifi/TAPE
+```
+
+2. Install Python dependencies
+
+```sh
+conda create -n TAPE -y python=3.10
+conda activate TAPE
+cd TAPE
+chmod +x install_requirements.sh
+./install_requirements.sh TAPE
+```
+
+## Real-world inference
+To use our method for restoring a real-world video, download the pre-trained model from the 
+[release](https://github.com/miccunifi/TAPE/releases/tag/latest) and place it under
+the ```TAPE/experiments/pretrained_model``` directory. Then, run the following command:
+
+```python real_world_inference.py --input-path <path_to_video> --output-path <path_to_output_folder>```
+
+
+```
+--input-path <str>                           Path to the video to restore
+--output-path <str>                          Path to the output folder
+--checkpoint-path <str>                      Path to the pretrained model checkpoint (default=experiments/pretrained_model/checkpoint.pth)
+--num-input-frames <int>                     Number of input frames T for each input window (default=5)
+--num-reference-frames <int>                 Number of reference frames D for each input window (default=5)
+--preprocess-mode <str>                      Preprocessing mode, options: ['crop', 'resize', 'none']. 'crop' extracts the --patch-size center
+                                             crop, 'resize' resizes the longest side to --patch-size while keeping the aspect ratio, 'none'
+                                             applies no preprocessing  (default=crop)
+--patch-size <int>                           Maximum patch size for --preprocess-mode ['crop', 'resize'] (default=512)
+    
+--frame-format <str>                         Frame format of the extracted and restored frames (default=jpg)
+--generate-combined-video <store_true>       Whether to generate the combined video (i.e. input and restored videos side by side)
+--no-intermediate-products <store_true>      Whether to delete intermediate products (i.e. input frames, restored frames, references)
+--batch-size <int>                           Batch size (default=1)
+--num-workers <int>                          Number of workers of the data loader (default=20)
+```
+
 ## Dataset
 
 <p align='center'>
@@ -48,6 +96,7 @@ The dataset can be downloaded [here](https://drive.google.com/drive/folders/1NjT
 
 ## TO-DO:
 - [ ] Pre-trained model
+- [ ] Real-world inference code
 - [ ] Testing code
 - [ ] Training code
 - [x] Synthetic dataset
