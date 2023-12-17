@@ -13,7 +13,7 @@ import torchvision
 import shutil
 
 from utils.prompts import prompts
-from data.RealWorldVideoDataset import RealWorldVideoDataset
+from data.real_world_video_dataset import RealWorldVideoDataset
 from models.swin_unet import SwinUNet
 
 
