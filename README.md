@@ -95,8 +95,8 @@ We release a dataset of videos synthetically degraded with Adobe After Effects t
 The dataset can be downloaded [here](https://drive.google.com/drive/folders/1NjTiXOSf8_FVofvGFBGFwndomjTsThF-?usp=sharing). We release both the ```mp4``` videos and the [LMDB](https://lmdb.readthedocs.io/en/release/) files associated with each split.
 
 ## TO-DO:
-- [ ] Pre-trained model
-- [ ] Real-world inference code
+- [x] Pre-trained model
+- [x] Real-world inference code
 - [ ] Testing code
 - [ ] Training code
 - [x] Synthetic dataset
