@@ -53,7 +53,7 @@ conda create -n TAPE -y python=3.10
 conda activate TAPE
 cd TAPE
 chmod +x install_requirements.sh
-./install_requirements.sh TAPE
+./install_requirements.sh
 ```
 
 ## Real-world inference
