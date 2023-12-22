@@ -31,6 +31,7 @@ class SwinUNet(nn.Module):
         norm_layer (nn.Module): Normalization layer. Default: nn.LayerNorm.
         use_checkpoint (bool): If True, use gradient checkpointing to save memory. Default: False.
     """
+
     def __init__(self,
                  in_chans: int = 3,
                  embed_dim: int = 96,
@@ -92,7 +93,8 @@ class SwinUNet(nn.Module):
                 qk_scale=qk_scale,
                 drop=drop_rate,
                 attn_drop=attn_drop_rate,
-                drop_path=dpr[sum(depths[:self.num_layers - 1 - i_layer]):sum(depths[:self.num_layers - 1 - i_layer + 1])],
+                drop_path=dpr[
+                          sum(depths[:self.num_layers - 1 - i_layer]):sum(depths[:self.num_layers - 1 - i_layer + 1])],
                 norm_layer=norm_layer,
                 sampling_operation="upsample",
                 use_checkpoint=use_checkpoint)
@@ -110,17 +112,21 @@ class SwinUNet(nn.Module):
                 qk_scale=qk_scale,
                 drop=drop_rate,
                 attn_drop=attn_drop_rate,
-                drop_path=dpr[sum(depths[:self.num_layers - 1 - i_layer]):sum(depths[:self.num_layers - 1 - i_layer + 1])],
+                drop_path=dpr[
+                          sum(depths[:self.num_layers - 1 - i_layer]):sum(depths[:self.num_layers - 1 - i_layer + 1])],
                 norm_layer=norm_layer)
             self.mrsff_layers.append(layer)
 
         ref_feature_extractor_layers = ["1", "3", "5"]
+        ref_feature_extractor_layers_embed_dims = [96, 192, 384]
         self.ref_feature_extractor = SwinFeatureExtractor(layer_name_list=ref_feature_extractor_layers,
-                                                          use_input_norm=True, use_range_norm=False, requires_grad=False)
+                                                          use_input_norm=True, use_range_norm=False,
+                                                          requires_grad=False)
         self.ref_feature_extractor_conv = nn.ModuleList()
         for i, layer in enumerate(ref_feature_extractor_layers):
-            self.ref_feature_extractor_conv.append(nn.Sequential(nn.Conv2d(embed_dim * 2 ** i, embed_dim * 2 ** i * 4, 3, 1, 1),
-                                                  nn.PixelShuffle(2)))
+            self.ref_feature_extractor_conv.append(
+                nn.Sequential(nn.Conv2d(ref_feature_extractor_layers_embed_dims[i], embed_dim * (2 ** i * 4), 3, 1, 1),
+                              nn.PixelShuffle(2)))
         self.apply(self._init_weights)
 
     def forward_encoding(self, imgs_lq: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -138,7 +144,8 @@ class SwinUNet(nn.Module):
 
         return restored, residual
 
-    def forward_decoding(self, restored: torch.Tensor, imgs_ref: torch.Tensor, residual: List[torch.Tensor]) -> torch.Tensor:
+    def forward_decoding(self, restored: torch.Tensor, imgs_ref: torch.Tensor,
+                         residual: List[torch.Tensor]) -> torch.Tensor:
         # Extract features from reference frames
         _, M, _, _, _ = imgs_ref.shape
         imgs_ref = rearrange(imgs_ref, 'b m c h w -> (b m) c h w')
@@ -155,9 +162,9 @@ class SwinUNet(nn.Module):
             if i == 0:
                 restored = layer(restored)  # Bottleneck layer
             else:
-                restored += residual[-1 - i]    # Encoder-decoder skip connection
-                restored_ref = self.mrsff_layers[-i](restored, feat_ref[-i])    # Combine restored and reference features
-                restored += restored_ref    # MRSFF skip connection
+                restored += residual[-1 - i]  # Encoder-decoder skip connection
+                restored_ref = self.mrsff_layers[-i](restored, feat_ref[-i])  # Combine restored and reference features
+                restored += restored_ref  # MRSFF skip connection
                 restored = layer(restored)  # Decoder layer
 
         restored = rearrange(restored, 'b c t h w -> b t c h w')

@@ -7,6 +7,8 @@
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/reference-based-restoration-of-digitized/analog-video-restoration-on-tape)](https://paperswithcode.com/sota/analog-video-restoration-on-tape?p=reference-based-restoration-of-digitized)
 
+**🔥 🔥 🔥 [22/12/2023] The pre-trained model and the code for real-world inference, training and testing are now available**
+
 This is the **official repository** of the [**paper**](https://arxiv.org/abs/2310.14926) "*Reference-based Restoration of Digitized Analog Videotapes*".
 
 ## Overview
@@ -21,6 +23,19 @@ Analog magnetic tapes have been the main video data storage device for several d
 
 Overview of the proposed approach. *Left* given a video, we identify the cleanest frames with CLIP. First, we measure the similarity between the frames and textual prompts that describe different artifacts. Then, we employ Otsu's method to define a threshold for classifying the frames based on their similarity scores, resulting in a set of clean frames. *Right* given a window of $T$ degraded input frames, we select the most similar $D$ clean frames based on the CLIP image features and employ them as references. The proposed Swin-UNet then restores the input frames while effectively leveraging the references.
 
+### Dataset
+
+<p align='center'>
+  <img src="assets/dataset_thumbnail.jpg" width="25%" alt="Dataset frame example">
+  <img src="assets/dataset_thumbnail_2.jpg" width="25%" alt="Dataset frame example">
+  <img src="assets/dataset_thumbnail_3.jpg" width="25%" alt="Dataset frame example">
+</p>
+
+We release a dataset of videos synthetically degraded with Adobe After Effects to exhibit artifacts resembling those of real-world analog videotapes. The original high-quality videos belong to the Venice scene of the Harmonic dataset. The artifacts taken into account are: 1) tape mistracking; 2) VHS edge waving; 3) chroma loss along the scanlines; 4) tape noise; 5) undersaturation. The dataset comprises a total of 26,392 frames corresponding to 40 clips. The clips are randomly divided into training and test sets with a 75%-25% ratio.
+
+The dataset can be downloaded [here](https://drive.google.com/drive/folders/1NjTiXOSf8_FVofvGFBGFwndomjTsThF-?usp=sharing). We release both the ```mp4``` videos and the [LMDB](https://lmdb.readthedocs.io/en/release/) files associated with each split.
+
+
 ## Citation
 
 ```bibtex
@@ -34,11 +49,12 @@ Overview of the proposed approach. *Left* given a video, we identify the cleanes
 }
 ```
 
-## Installation
+<details>
+<summary><h2>Getting Started</h2></summary>
+
+### Installation
 We recommend using the [**Anaconda**](https://www.anaconda.com/) package manager to avoid dependency/reproducibility
-problems.
-For Linux systems, you can find a conda installation
-guide [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html).
+problems. For Linux systems, you can find a conda installation guide [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html).
 
 1. Clone the repository
 
@@ -56,13 +72,47 @@ chmod +x install_requirements.sh
 ./install_requirements.sh
 ```
 
-## Real-world inference
+3. (Optional) If you want to compute the [VMAF](https://github.com/Netflix/vmaf) score, you first need to install [ffmpeg](https://ffmpeg.org/).
+Then, follow the instructions reported [here](https://github.com/Netflix/vmaf/blob/master/resource/doc/python.md) to install
+the VMAF Python library. Finally, place the ```vmaf``` folder inside the ```utils``` directory.
+
+
+### Data Preparation
+
+Download the dataset from [here](https://drive.google.com/drive/folders/1NjTiXOSf8_FVofvGFBGFwndomjTsThF-?usp=sharing). 
+At the end, the directory structure should look like this:
+
+```
+├── data_base_path
+|
+|    ├── train
+|    |   ├── input
+|    |   |   ├── input.lmdb
+|    |   |   ├── videos
+|    |   ├── gt
+|    |   |   ├── gt.lmdb
+|    |   |   ├── videos
+|
+|    ├── test
+|    |   ├── input
+|    |   |   ├── input.lmdb
+|    |   |   ├── videos
+|    |   ├── gt
+|    |   |   ├── gt.lmdb
+|    |   |   ├── videos
+```
+</details>
+
+<details>
+<summary><h2>Real-world Inference</h2></summary>
+
 To use our method for restoring a real-world video, download the pre-trained model from the 
 [release](https://github.com/miccunifi/TAPE/releases/tag/weights) and place it under
 the ```experiments/pretrained_model``` directory. Then, run the following command:
 
-```python real_world_inference.py --input-path <path_to_video> --output-path <path_to_output_folder>```
-
+```python
+ python real_world_inference.py --input-path <path_to_video> --output-path <path_to_output_folder>
+```
 
 ```
 --input-path <str>                           Path to the video to restore
@@ -82,25 +132,29 @@ the ```experiments/pretrained_model``` directory. Then, run the following comman
 --num-workers <int>                          Number of workers of the data loader (default=20)
 ```
 
-## Dataset
+</details>
 
-<p align='center'>
-  <img src="assets/dataset_thumbnail.jpg" width="25%" alt="Dataset frame example">
-  <img src="assets/dataset_thumbnail_2.jpg" width="25%" alt="Dataset frame example">
-  <img src="assets/dataset_thumbnail_3.jpg" width="25%" alt="Dataset frame example">
-</p>
+<details>
+<summary><h2>Training and Testing</h2></summary>
 
-We release a dataset of videos synthetically degraded with Adobe After Effects to exhibit artifacts resembling those of real-world analog videotapes. The original high-quality videos belong to the Venice scene of the Harmonic dataset. The artifacts taken into account are: 1) tape mistracking; 2) VHS edge waving; 3) chroma loss along the scanlines; 4) tape noise; 5) undersaturation. The dataset comprises a total of 26,392 frames corresponding to 40 clips. The clips are randomly divided into training and test sets with a 75%-25% ratio.
+To train our model from scratch, run the following command:
 
-The dataset can be downloaded [here](https://drive.google.com/drive/folders/1NjTiXOSf8_FVofvGFBGFwndomjTsThF-?usp=sharing). We release both the ```mp4``` videos and the [LMDB](https://lmdb.readthedocs.io/en/release/) files associated with each split.
+```python
+python main.py --experiment-name <name_of_the_experiment> --data-base-path <data_base_path> --comet-api-key <comet_api_key> --comet-project-name <comet_project_name>
+```
 
-## TO-DO:
-- [x] Pre-trained model
-- [x] Real-world inference code
-- [ ] Testing code
-- [ ] Training code
-- [x] Synthetic dataset
+You need a [Comet ML](https://www.comet.com/site/) for logging. See ```main.py``` for all the available options. The
+checkpoints will be saved inside the ```experiments/<name_of_the_experiment>/checkpoints``` folder. After training, ```main.py```
+will run the evaluation on the test set and save the results inside the ```experiments/<name_of_the_experiment>/results``` folder.
 
+If you want to skip the training and just run the evaluation on the test set, add the ```--test-only``` flag to the command
+above. In addition, if you want to avoid computing the VMAF score, add the ```--no-vmaf``` flag.
+
+You can test our pre-trained model by adding the ```--eval-type pretrained``` flag. Note that you first need to download the pre-trained model from the
+[release](https://github.com/miccunifi/TAPE/releases/tag/weights) and to place it under
+the ```experiments/pretrained_model``` directory.
+
+</details>
 
 ## Authors
 

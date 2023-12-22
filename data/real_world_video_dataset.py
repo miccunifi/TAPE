@@ -78,7 +78,10 @@ class RealWorldVideoDataset(Dataset):
 
         imgs_ref = []
         for ref_name in self.references[img_name]:
-            img_t = ToTensor()(Image.open(self.input_folder / ref_name))
+            img = cv2.imread(str(self.input_folder / ref_name))
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            img = img.astype(np.float32) / 255.
+            img_t = ToTensor()(img)
             imgs_ref.append(img_t)
         imgs_ref = torch.stack(imgs_ref)
 

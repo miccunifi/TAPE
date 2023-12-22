@@ -16,8 +16,7 @@ class SwinFeatureExtractor(nn.Module):
                 features according to the layer_name_list.
             use_input_norm (bool): If True, x: [0, 1] --> (x - mean) / std. Default: True
             use_range_norm (bool): If True, norm images with range [-1, 1] to [0, 1]. Default: False.
-            requires_grad (bool): If true, the parameters of the feature extractor network will be
-                optimized. Default: False.
+            requires_grad (bool): If true, the parameters of the feature extractor network will be optimized. Default: False.
         """
         super(SwinFeatureExtractor, self).__init__()
         if not layer_name_list:
