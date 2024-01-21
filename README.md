@@ -3,6 +3,9 @@
 ### Reference-based Restoration of Digitized Analog Videotapes
 
 [![arXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2310.14926)
+[![Generic badge](https://img.shields.io/badge/Video-YouTube-red.svg)](https://youtu.be/QLMmw3qiZeU)
+[![Generic badge](https://img.shields.io/badge/Slides-Link-orange.svg)](https://docs.google.com/presentation/d/1Mq2q68jkiHCfIrJRIZgeZ_D3nH-p2sCY/edit?usp=drive_link&ouid=109868310223697047246&rtpof=true&sd=true)
+[![Generic badge](https://img.shields.io/badge/Poster-Link-purple.svg)](/assets/Poster.pdf)
 [![GitHub Stars](https://img.shields.io/github/stars/miccunifi/TAPE?style=social)](https://github.com/miccunifi/TAPE)
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/reference-based-restoration-of-digitized/analog-video-restoration-on-tape)](https://paperswithcode.com/sota/analog-video-restoration-on-tape?p=reference-based-restoration-of-digitized)
