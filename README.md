@@ -42,13 +42,12 @@ The dataset can be downloaded [here](https://drive.google.com/drive/folders/1NjT
 ## Citation
 
 ```bibtex
-@misc{agnolucci2023referencebased,
-    title={Reference-based Restoration of Digitized Analog Videotapes},
-    author={Lorenzo Agnolucci and Leonardo Galteri and Marco Bertini and Alberto Del Bimbo},
-    year={2023},
-    eprint={2310.14926},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV}
+@inproceedings{agnolucci2024reference,
+  title={Reference-based Restoration of Digitized Analog Videotapes},
+  author={Agnolucci, Lorenzo and Galteri, Leonardo and Bertini, Marco and Del Bimbo, Alberto},
+  booktitle={Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision},
+  pages={1659--1668},
+  year={2024}
 }
 ```
 
